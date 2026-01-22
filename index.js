@@ -28,7 +28,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://zepxtheecommerece.vercel.app",
+    "https://zepxtheecommerce.vercel.app",
     "https://your-name.rf.gd"
   ],
   credentials: true
