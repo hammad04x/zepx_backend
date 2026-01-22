@@ -30,16 +30,12 @@ const orders = require("./routes/orders/orders");
 
 const app = express();
 
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000",
-      "https://zepxtheecommerece.vercel.app",
-      "https://your-name.rf.gd"
-    ],
-    credentials: true
-  })
-);
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+app.options("*", cors());
 
 app.use(express.json());
 app.use(bodyParser.json());
