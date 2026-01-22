@@ -31,8 +31,13 @@ app.use(cors({
     "https://zepxtheecommerce.vercel.app",
     "https://your-name.rf.gd"
   ],
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
+
+// 🔥 THIS is what fixes preflight on Render
+app.options("*", cors());
 
 app.use(express.json());
 app.use(bodyParser.json());
