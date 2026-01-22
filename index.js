@@ -1,16 +1,15 @@
-// import in Index.js in server
-
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
-const session = require("express-session");
-const passport = require("passport"); //  Import passport globally
+const passport = require("passport");
+
 dotenv.config();
 
 const connection = require("./connection/connection");
-require("./routes/googleAuth/passport"); //  Load Google OAuth Config
+require("./routes/googleAuth/passport");
 
+// routes
 const signup = require("./routes/signup/signup");
 const contact = require("./routes/contact/contact");
 const category = require("./routes/category/category");
@@ -21,14 +20,16 @@ const banner = require("./routes/banner/banner");
 const offer = require("./routes/offer/offer");
 const admin = require("./routes/Admin/login/login");
 const feedback = require("./routes/feedback/feedback");
-const googleAuth = require("./routes/googleAuth/googleAuth"); //  Google Auth Routes
-const orders = require("./routes/orders/orders"); //  Google Auth Routes
+const googleAuth = require("./routes/googleAuth/googleAuth");
+const orders = require("./routes/orders/orders");
 
 const app = express();
+
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://zepxtheecommerece.vercel.app"
+    "https://zepxtheecommerece.vercel.app",
+    "https://your-name.rf.gd"
   ],
   credentials: true
 }));
@@ -36,10 +37,6 @@ app.use(cors({
 app.use(express.json());
 app.use(bodyParser.json());
 
-
-
-
-//  Register Routes
 app.use("/", signup);
 app.use("/", contact);
 app.use("/", category);
@@ -53,26 +50,12 @@ app.use("/", feedback);
 app.use("/auth", googleAuth);
 app.use("/", orders);
 
-
 app.get("/", (req, res) => {
   res.send("🚀 ZEPX Backend Working!");
-  console.log("🚀 ZEPX Backend Working!");
 });
 
-
-
-
-//  Fix the .env variables
 const PORT = process.env.PORT || 10000;
 
-connection.connect((error) => {
-    if (error) {
-        console.log("Database Connection Failed!");
-    } else {
-        console.log(" Database Connected!");
-    }
-
-    app.listen(PORT, () => {
-        console.log(`Server is running on http://localhost:${PORT}`);
-    });
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on ${PORT}`);
 });
