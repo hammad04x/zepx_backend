@@ -26,17 +26,10 @@ const orders = require("./routes/orders/orders");
 const app = express();
 
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://zepxtheecommerce.vercel.app",
-    "https://your-name.rf.gd"
-  ],
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
 }));
-
-// 🔥 THIS is what fixes preflight on Render
 app.options("*", cors());
 
 app.use(express.json());
