@@ -62,14 +62,17 @@ app.get("/", (req, res) => {
 // Start server
 const PORT = process.env.PORT || 10000;
 
-connection.connect((error) => {
-  if (error) {
-    console.log("Database Connection Failed!");
-  } else {
-    console.log(" Database Connected!");
-  }
+(async () => {
+  try {
+    const conn = await connection.getConnection();
+    console.log("🔥 Database Connected");
+    conn.release();
 
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-  });
-});
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error("💀 Database connection failed:", err);
+    process.exit(1);
+  }
+})();
