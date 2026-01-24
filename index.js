@@ -30,11 +30,27 @@ const orders = require("./routes/orders/orders");
 
 const app = express();
 
+const allowedOrigins = [
+  "https://zepxtheecommerce.vercel.app",
+  "https://zepx-backend.onrender.com",
+  "http://localhost:3000"
+];
+
 app.use(cors({
-  origin: "*",
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
+    }
+  },
+  credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+
+app.set("trust proxy", 1);
+
 app.options("*", cors());
 
 app.use(express.json());
